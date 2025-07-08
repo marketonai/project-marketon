@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss"
 
-const config = {
+const config: Config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -53,15 +53,12 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        yellow: {
-          400: "#FACC15", // Primary yellow
-          500: "#EAB308", // Darker yellow for hover states
-          600: "#CA8A04", // Even darker for active states
-        },
-        black: {
-          DEFAULT: "#000000", // Pure black
-          900: "#0F0F0F", // Slightly lighter black
-          800: "#1A1A1A", // Dark gray for subtle contrast
+        chart: {
+          "1": "hsl(var(--chart-1))",
+          "2": "hsl(var(--chart-2))",
+          "3": "hsl(var(--chart-3))",
+          "4": "hsl(var(--chart-4))",
+          "5": "hsl(var(--chart-5))",
         },
       },
       borderRadius: {
