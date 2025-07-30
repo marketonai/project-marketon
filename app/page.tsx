@@ -608,6 +608,22 @@ function ServiceCarousel({ selectedService, setSelectedService, mousePosition }:
   const [robotPosition, setRobotPosition] = useState({ x: 0, y: 0 })
   const [isAnimating, setIsAnimating] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(true)
+  const [cardWidth, setCardWidth] = useState(272)
+
+  useEffect(() => {
+    const updateCardWidth = () => {
+      if (typeof window !== "undefined") {
+        if (window.innerWidth < 640) setCardWidth(140)
+        else if (window.innerWidth < 768) setCardWidth(150)
+        else if (window.innerWidth < 1024) setCardWidth(160)
+        else setCardWidth(272)
+      }
+    }
+
+    updateCardWidth()
+    window.addEventListener("resize", updateCardWidth)
+    return () => window.removeEventListener("resize", updateCardWidth)
+  }, [])
 
   // Create infinite scroll array by duplicating services
   const infiniteServices = [
@@ -685,9 +701,7 @@ function ServiceCarousel({ selectedService, setSelectedService, mousePosition }:
           <motion.div
             className="flex space-x-2 md:space-x-4"
             animate={{
-              x:
-                -currentIndex *
-                (window.innerWidth < 640 ? 140 : window.innerWidth < 768 ? 150 : window.innerWidth < 1024 ? 160 : 272),
+              x: -currentIndex * cardWidth,
             }}
             transition={
               isTransitioning
@@ -700,7 +714,7 @@ function ServiceCarousel({ selectedService, setSelectedService, mousePosition }:
                 : { duration: 0 }
             }
             style={{
-              width: `${infiniteServices.length * (window.innerWidth < 640 ? 140 : window.innerWidth < 768 ? 150 : window.innerWidth < 1024 ? 160 : 272)}px`,
+              width: `${infiniteServices.length * cardWidth}px`,
               willChange: "transform",
             }}
           >
@@ -1333,7 +1347,7 @@ export default function Home() {
                     <div className="absolute inset-0 rounded-full bg-yellow-400/10 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <h4 className="text-xl font-bold text-white mb-2">{member.name}</h4>
-                  <p className="text-yellow-400 font-medium mb-3">{member.role}</p>
+
                   <p className="text-gray-400 text-sm">{member.bio}</p>
                 </motion.div>
               ))}
